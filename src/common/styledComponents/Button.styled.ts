@@ -6,9 +6,10 @@ const Button = styled.button<any>`
   border-radius: 27px;
   border: none;
   cursor: pointer;
+  outline: none;
 
-  &:focus {
-    outline: 1px solid rgba(47, 47, 47, 0.4);
+  &:focus-visible {
+    outline: #888 2px solid;
   }
 
   ${layout}

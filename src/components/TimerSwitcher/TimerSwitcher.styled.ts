@@ -9,6 +9,10 @@ export const Switcher = styled.div`
 `;
 
 export const SwitcherItem = styled(Button)`
+  font-weight: 700;
   background-color: ${props => !props.active ? 'transparent' : '#f87070'};
-  color: ${props => !props.active ? '#d7e0ff' : '#1e213f'};
+  color: ${props => !props.active ? '#8c8c8c' : '#1e213f'};
+  &:hover {
+    color: ${props => !props.active ? '#d7e0ff' : ''};
+  }
 `;

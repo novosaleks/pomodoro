@@ -1,13 +1,36 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
 import { Switcher, SwitcherItem } from './TimerSwitcher.styled';
 
-const TimerSwitcher: React.FC = () => {
+interface TimerSwitcherProps {
+    switchActiveTimerType: Dispatch<SetStateAction<string>>,
+    activeTimerType: string,
+}
+
+const TimerSwitcher: React.FC<TimerSwitcherProps> = ({ switchActiveTimerType, activeTimerType }) => {
+
+    const onClickHandler = (e: React.MouseEvent<HTMLDivElement>): void => {
+        const target = e.target as typeof e.target & {
+            dataset: { type: string };
+        };
+
+        if (target.dataset.type) {
+            switchActiveTimerType(target.dataset.type);
+        }
+    };
+
+    const renderItems = (labels: string[]): React.ReactNode[] => {
+        return labels.map(label => {
+            return <SwitcherItem key={label}
+                                 data-type={label}
+                                 active={activeTimerType === label}
+                                 width={120}>{label}</SwitcherItem>;
+        });
+    };
+
     return (
-        <Switcher>
-            <SwitcherItem active width={120}>Click Me</SwitcherItem>
-            <SwitcherItem width={120}>Click Me</SwitcherItem>
-            <SwitcherItem width={120}>Click Me</SwitcherItem>
+        <Switcher onClick={onClickHandler}>
+            {renderItems(['pomodoro', 'short break', 'long break'])}
         </Switcher>
     );
 };

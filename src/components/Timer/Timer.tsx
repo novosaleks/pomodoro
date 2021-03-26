@@ -1,24 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Outer, Inner, CircularWrapper, Content, RemainTime, Action } from './Timer.styled';
-import { CircularProgressbar } from 'react-circular-progressbar';
-
-import 'react-circular-progressbar/dist/styles.css';
-
+import ClockFace from '../ClockFace';
+import { SwitchWrapper, Title } from './Timer.styled';
+import TimerSwitcher from '../TimerSwitcher';
 
 const Timer: React.FC = () => {
+    const [activeTimerType, switchActiveTimerType] = useState<string>('pomodoro');
+
     return (
-        <Outer width={410} height={410}>
-            <Inner>
-                <CircularWrapper>
-                    <CircularProgressbar value={40}/>
-                </CircularWrapper>
-                <Content>
-                    <RemainTime>10:00</RemainTime>
-                    <Action>PAUSE</Action>
-                </Content>
-            </Inner>
-        </Outer>
+        <>
+            <Title>pomodoro</Title>
+            <SwitchWrapper>
+                <TimerSwitcher activeTimerType={activeTimerType} switchActiveTimerType={switchActiveTimerType}/>
+            </SwitchWrapper>
+            <ClockFace/>
+        </>
     );
 };
 
