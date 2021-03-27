@@ -13,7 +13,14 @@ const CommonStyles = createGlobalStyle`
   h6 {
     margin: 0;
     line-height: 1;
-    color: #fff;
+  }
+  
+  .focus {
+    outline: none;
+
+    &:focus-visible {
+      outline: #888 2px solid;
+    }
   }
 `;
 

@@ -6,11 +6,6 @@ const Button = styled.button<any>`
   border-radius: 27px;
   border: none;
   cursor: pointer;
-  outline: none;
-
-  &:focus-visible {
-    outline: #888 2px solid;
-  }
 
   ${layout}
 `;

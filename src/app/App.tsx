@@ -1,13 +1,17 @@
 import React from 'react';
 
-import { Container } from './App.styled';
 import Timer from '../components/Timer';
+import { Portal } from '../common/containers';
+import ModalWindow from '../components/ModalWindow';
 
 const App: React.FC = () => {
     return (
-        <Container width={1 / 2}>
+        <>
             <Timer/>
-        </Container>
+            <Portal id='modal-root'>
+                <ModalWindow/>
+            </Portal>
+        </>
     );
 };
 

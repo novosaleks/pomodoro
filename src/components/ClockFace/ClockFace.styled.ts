@@ -41,4 +41,8 @@ export const Action = styled.h2`
   margin-top: 2rem;
   font-size: 1rem;
   letter-spacing: 15px;
+  
+  &:hover {
+    color: #f87070;
+  }
 `

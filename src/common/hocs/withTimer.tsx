@@ -1,4 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+interface baseProps {
+    togglePomodoro: () => void,
+    timerType: string,
+}
 
 interface injectedProps {
     time: string,
@@ -7,59 +12,51 @@ interface injectedProps {
     actionContent: string,
 }
 
-interface TimerState {
-    isActive: boolean,
-    timerId: null | NodeJS.Timeout,
+interface ITimeConfig {
+    [value: string]: number,
 }
 
-
-const initialTime = 5;
+const timeConfig: ITimeConfig = {
+    'pomodoro': 5,
+    'short break': 15,
+    'long break': 20,
+};
 
 const withTimer = () => (View: React.ComponentType<injectedProps>) => {
-    return () => {
-        const [time, setTime] = useState<number>(initialTime);
-        const [timer, setTimer] = useState<TimerState>(
-            {
-                isActive: false,
-                timerId: null,
+    return ({ togglePomodoro, timerType }: baseProps) => {
+        const [time, setTime] = useState<number>(0);
+        const [isActive, toggleActive] = useState<boolean>(false);
+
+        // on change timer type
+        useEffect(() => {
+            setTime(timeConfig[timerType]);
+            return () => toggleActive(false);
+        }, [timerType]);
+
+        // on time ends
+        useEffect(() => {
+            if (time <= 0) {
+                togglePomodoro();
             }
-        );
+        }, [time, togglePomodoro]);
 
-        const pauseHandler = (): void => {
-            if (time > 0) {
-                if (timer.isActive) {
-                    clearInterval(timer.timerId as NodeJS.Timeout);
+        // on pause/resume
+        useEffect(() => {
+            if (isActive) {
+                const id = setInterval(() => {
+                    setTime(time => {
+                        if (time <= 0) {
+                            clearInterval(id);
+                            return 0;
+                        }
 
-                    setTimer({
-                        timerId: null,
-                        isActive: false,
+                        return time - 1;
                     });
-                } else {
-                    const id = initializeTimer();
+                }, 1000);
 
-                    setTimer({
-                        timerId: id,
-                        isActive: true,
-                    });
-                }
+                return () => clearInterval(id);
             }
-        };
-
-        const initializeTimer = (): NodeJS.Timeout => {
-            const id = setInterval(() => {
-                setTime(time => {
-                    if (time <= 0) {
-                        clearInterval(id);
-                        return time;
-                    }
-
-                    return time - 1;
-                });
-            }, 1000);
-
-            return id;
-        };
-
+        }, [isActive]);
 
         const formatTime = (timestamp: number): string => {
             const minutes = Math.floor(timestamp / 60),
@@ -72,8 +69,9 @@ const withTimer = () => (View: React.ComponentType<injectedProps>) => {
             return value < 10 ? `0${value}` : value;
         };
 
-        return <View pauseHandler={pauseHandler} actionContent={timer.isActive ? 'STOP' : 'START'}
-                     timePart={time * 100 / initialTime}
+        return <View pauseHandler={() => toggleActive(isActive => !isActive)}
+                     actionContent={isActive ? 'STOP' : 'START'}
+                     timePart={time * 100 / timeConfig[timerType]}
                      time={formatTime(time)}/>;
     };
 };

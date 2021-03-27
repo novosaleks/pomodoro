@@ -22,6 +22,7 @@ const TimerSwitcher: React.FC<TimerSwitcherProps> = ({ switchActiveTimerType, ac
     const renderItems = (labels: string[]): React.ReactNode[] => {
         return labels.map(label => {
             return <SwitcherItem key={label}
+                                 className='focus'
                                  data-type={label}
                                  active={activeTimerType === label}
                                  width={120}>{label}</SwitcherItem>;
