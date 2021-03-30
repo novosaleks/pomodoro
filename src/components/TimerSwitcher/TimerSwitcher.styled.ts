@@ -8,9 +8,9 @@ export const Switcher = styled.div`
   padding: .5rem;
 `;
 
-export const SwitcherItem = styled(Button)`
+export const SwitcherItem = styled(Button)<{active: boolean}>`
   font-weight: 700;
-  background-color: ${props => !props.active ? 'transparent' : '#f87070'};
+  background-color: ${props => !props.active ? 'transparent' : ''};
   color: ${props => !props.active ? '#8c8c8c' : '#1e213f'};
   &:hover {
     color: ${props => !props.active ? '#d7e0ff' : ''};

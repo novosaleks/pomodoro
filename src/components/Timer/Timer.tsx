@@ -1,22 +1,33 @@
 import React, { useState } from 'react';
 
 import ClockFace from '../ClockFace';
-import { SwitchWrapper, Title, Container, SettingsButton } from './Timer.styled';
+import { SwitchWrapper, Title, SettingsButton } from './Timer.styled';
 import TimerSwitcher from '../TimerSwitcher';
 
-import settingsIcon from '../../assets/icon-settings.svg';
+import { Container } from '../../common/styledComponents';
 
-const Timer: React.FC = () => {
-    const [activeTimerType, switchActiveTimerType] = useState<string>('pomodoro');
+import settingsIcon from '../../assets/icon-settings.svg';
+import { timerConfig, timerType } from 'timer';
+
+interface TimerProps {
+    openModal: () => void,
+    config: timerConfig,
+}
+
+const Timer: React.FC<TimerProps> = ({ openModal, config }) => {
+    const [activeTimerType, switchActiveTimerType] = useState<timerType>('pomodoro');
 
     return (
-        <Container width={1/2}>
+        <Container width={1}>
             <Title>pomodoro</Title>
             <SwitchWrapper>
                 <TimerSwitcher activeTimerType={activeTimerType} switchActiveTimerType={switchActiveTimerType}/>
             </SwitchWrapper>
-            <ClockFace timerType={activeTimerType} togglePomodoro={() => switchActiveTimerType('pomodoro')}/>
-            <SettingsButton className='focus'><img src={settingsIcon} alt="settings"/></SettingsButton>
+            <ClockFace initValue={config[activeTimerType]} timerType={activeTimerType}
+                       toggleTimer={switchActiveTimerType}/>
+            <SettingsButton onClick={openModal} className='focus'>
+                <img src={settingsIcon} alt="settings"/>
+            </SettingsButton>
         </Container>
     );
 };
