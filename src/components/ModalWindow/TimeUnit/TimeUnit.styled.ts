@@ -7,6 +7,7 @@ interface UnitProps extends LayoutProps, FlexboxProps {
 export const Unit = styled.label<UnitProps>`
   ${layout};
   ${flexbox};
+  position: relative;
 `;
 
 export const Input = styled.input<any>`
@@ -31,3 +32,17 @@ export const InputLabel = styled.span<LayoutProps>`
   font-size: 0.8rem;
   color: #858585;
 `;
+
+const Arrow = styled.img`
+  position: absolute;    
+  right: 15px;
+  cursor: pointer;
+`;
+
+export const IncreaseArrow = styled(Arrow)`
+  top: 20px;
+`
+
+export const DecreaseArrow = styled(Arrow)`
+  bottom: 5px;
+`

@@ -23,7 +23,7 @@ export const Overlay = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  min-height: 100vh;
+  min-height: 1400px;
   background-color: rgba(0, 0, 0, .5);
   z-index: 9;
 `;
@@ -31,9 +31,9 @@ export const Overlay = styled.div`
 export const Modal = styled.div<WidthProps>`
   ${width};
   position: absolute;
-  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  top: 15rem;
+  transform: translateX(-50%);
   background-color: #fff;
   border-radius: 25px;
   color: #161932;
