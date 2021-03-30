@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.js": "/novosaleks.github.io/pomodoro/static/js/main.074124d0.chunk.js",
+    "main.js.map": "/novosaleks.github.io/pomodoro/static/js/main.074124d0.chunk.js.map",
+    "runtime-main.js": "/novosaleks.github.io/pomodoro/static/js/runtime-main.5e492e6c.js",
+    "runtime-main.js.map": "/novosaleks.github.io/pomodoro/static/js/runtime-main.5e492e6c.js.map",
+    "static/css/2.22da0250.chunk.css": "/novosaleks.github.io/pomodoro/static/css/2.22da0250.chunk.css",
+    "static/js/2.fd3918a6.chunk.js": "/novosaleks.github.io/pomodoro/static/js/2.fd3918a6.chunk.js",
+    "static/js/2.fd3918a6.chunk.js.map": "/novosaleks.github.io/pomodoro/static/js/2.fd3918a6.chunk.js.map",
+    "index.html": "/novosaleks.github.io/pomodoro/index.html",
+    "static/css/2.22da0250.chunk.css.map": "/novosaleks.github.io/pomodoro/static/css/2.22da0250.chunk.css.map",
+    "static/js/2.fd3918a6.chunk.js.LICENSE.txt": "/novosaleks.github.io/pomodoro/static/js/2.fd3918a6.chunk.js.LICENSE.txt",
+    "static/media/icon-close.79cfecaf.svg": "/novosaleks.github.io/pomodoro/static/media/icon-close.79cfecaf.svg",
+    "static/media/icon-settings.e0a317db.svg": "/novosaleks.github.io/pomodoro/static/media/icon-settings.e0a317db.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.5e492e6c.js",
+    "static/css/2.22da0250.chunk.css",
+    "static/js/2.fd3918a6.chunk.js",
+    "static/js/main.074124d0.chunk.js"
+  ]
+}
