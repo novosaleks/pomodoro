@@ -1,6 +1,16 @@
 import { createGlobalStyle } from 'styled-components';
+import { fontSize, FontSizeProps } from 'styled-system';
 
-const CommonStyles = createGlobalStyle`
+interface CommonStylesProps extends FontSizeProps {
+    'font': string,
+}
+
+const CommonStyles = createGlobalStyle<CommonStylesProps>`
+  * {
+    box-sizing: border-box;
+    font-family: ${props => props.font};
+  }
+
   body {
     background-color: #1e213f;
   }
@@ -14,13 +24,17 @@ const CommonStyles = createGlobalStyle`
     margin: 0;
     line-height: 1;
   }
-  
+
   .focus {
     outline: none;
 
     &:focus-visible {
       outline: #888 2px solid;
     }
+  }
+
+  &:root {
+    ${fontSize}
   }
 `;
 

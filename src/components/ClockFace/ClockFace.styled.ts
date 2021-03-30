@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { layout } from 'styled-system';
+import { layout, fontSize, FontSizeProps } from 'styled-system';
 
 export const Outer = styled.div<any>`
   padding: 1.4rem;
@@ -16,6 +16,7 @@ export const Inner = styled.div`
   height: 100%;
   border-radius: 50%;
   background-color: #161932;
+  color: #d7e0ff;
 `;
 
 export const CircularWrapper = styled.div`
@@ -31,9 +32,10 @@ export const Content = styled(CircularWrapper)`
   z-index: 2;
 `
 
-export const RemainTime = styled.h2`
-  font-size: 6.3rem;
+export const RemainTime = styled.h2<FontSizeProps>`
+  font-size: 5.5rem;
   font-weight: 700;
+  ${fontSize}
 `
 
 export const Action = styled.h2`
@@ -43,6 +45,6 @@ export const Action = styled.h2`
   letter-spacing: 15px;
   
   &:hover {
-    color: #f87070;
+    color: ${props => props.theme.color};
   }
 `

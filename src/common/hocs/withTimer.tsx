@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { timerType } from 'timer';
 
 interface baseProps {
-    togglePomodoro: () => void,
-    timerType: string,
+    toggleTimer: Dispatch<SetStateAction<timerType>>,
+    timerType: timerType,
+    initValue: number,
 }
 
 interface injectedProps {
@@ -12,33 +14,32 @@ interface injectedProps {
     actionContent: string,
 }
 
-interface ITimeConfig {
-    [value: string]: number,
-}
-
-const timeConfig: ITimeConfig = {
-    'pomodoro': 5,
-    'short break': 15,
-    'long break': 20,
-};
-
 const withTimer = () => (View: React.ComponentType<injectedProps>) => {
-    return ({ togglePomodoro, timerType }: baseProps) => {
+    return ({ toggleTimer, timerType, initValue }: baseProps) => {
         const [time, setTime] = useState<number>(0);
         const [isActive, toggleActive] = useState<boolean>(false);
+        const [isEndsTimer, setEndsTimer] = useState<boolean>(false);
 
         // on change timer type
         useEffect(() => {
-            setTime(timeConfig[timerType]);
-            return () => toggleActive(false);
+            setTime(initValue);
+            return () => {
+                toggleActive(false);
+                setEndsTimer(false);
+            };
         }, [timerType]);
+
+        // on loaded from storage
+        useEffect(() => {
+            setTime(initValue);
+        }, [initValue]);
 
         // on time ends
         useEffect(() => {
-            if (time <= 0) {
-                togglePomodoro();
+            if (time <= 0 && isActive) {
+                restartTimer();
             }
-        }, [time, togglePomodoro]);
+        }, [time, toggleTimer]);
 
         // on pause/resume
         useEffect(() => {
@@ -58,6 +59,12 @@ const withTimer = () => (View: React.ComponentType<injectedProps>) => {
             }
         }, [isActive]);
 
+        const restartTimer = (): void => {
+            setTime(initValue);
+            setEndsTimer(true);
+            toggleActive(false);
+        };
+
         const formatTime = (timestamp: number): string => {
             const minutes = Math.floor(timestamp / 60),
                   seconds = timestamp % 60;
@@ -69,9 +76,19 @@ const withTimer = () => (View: React.ComponentType<injectedProps>) => {
             return value < 10 ? `0${value}` : value;
         };
 
-        return <View pauseHandler={() => toggleActive(isActive => !isActive)}
-                     actionContent={isActive ? 'STOP' : 'START'}
-                     timePart={time * 100 / timeConfig[timerType]}
+        const pauseHandler = () => {
+            if (isEndsTimer) {
+                setEndsTimer(false);
+            }
+
+            toggleActive(isActive => !isActive);
+        };
+
+        return <View pauseHandler={pauseHandler}
+                     actionContent={
+                         isActive ? 'STOP' : isEndsTimer ? 'RESTART' : 'START'
+                     }
+                     timePart={time * 100 / initValue}
                      time={formatTime(time)}/>;
     };
 };
