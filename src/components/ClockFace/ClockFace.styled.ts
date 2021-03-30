@@ -45,6 +45,6 @@ export const Action = styled.h2`
   letter-spacing: 15px;
   
   &:hover {
-    color: ${props => props.theme.color};
+    color: ${props => props.theme.primaryColor};
   }
 `

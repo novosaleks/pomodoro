@@ -20,6 +20,8 @@ const withTimer = () => (View: React.ComponentType<injectedProps>) => {
         const [isActive, toggleActive] = useState<boolean>(false);
         const [isEndsTimer, setEndsTimer] = useState<boolean>(false);
 
+
+        // on timer init
         useEffect(() => {
             setTime(initValue);
             return () => {
@@ -31,6 +33,9 @@ const withTimer = () => (View: React.ComponentType<injectedProps>) => {
         // on time ends
         useEffect(() => {
             if (time <= 0 && isActive) {
+                window.onbeforeunload = function() {
+                    return null;
+                };
                 restartTimer();
             }
         }, [time, toggleTimer]);
@@ -38,6 +43,9 @@ const withTimer = () => (View: React.ComponentType<injectedProps>) => {
         // on pause/resume
         useEffect(() => {
             if (isActive) {
+                window.onbeforeunload = function() {
+                    return true;
+                };
                 const id = setInterval(() => {
                     setTime(time => {
                         if (time <= 0) {
